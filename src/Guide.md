@@ -114,3 +114,46 @@ if we are using nodemon we can omit the src/app.js from script, nodemaon will au
   }
 }
 ```
+
+# JSON
+
+using JSON data in app and playing around in postman
+
+```javascript
+const customers = [
+  { name: "Caleb", industry: "music" },
+  { name: "John", industry: "networking" },
+  { name: "Sal", industry: "sports medicine" },
+];
+
+app.get("/", (req, res) => {
+  res.send("Welcome");
+});
+
+app.get("/api/customers", (req, res) => {
+  res.send({ customers: customers });
+});
+```
+
+**POST REQUEST**
+
+_how we can send a body to a api request?_
+_to send data to backend_
+
+for POST requests we need to add these code otherwise itll show undefined in terminal
+
+```javascript
+const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+```
+
+![alt text](image.png)
+
+```javascript
+app.post("/api/customers", (req, res) => {
+  console.log(req.body);
+  res.send(req.body);
+});
+```
