@@ -48,3 +48,12 @@ import {v4 as uuidv4} from 'uuid`;
   }
 }
 ```
+
+# Git
+
+if u want to change ssh to http url
+
+```bash
+git remote set-url origin https://github.com/DhruvJais01/nodejs.git
+``
+```
