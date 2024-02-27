@@ -70,6 +70,16 @@ app.put("/api/customers/:id", async (req, res) => {
   }
 });
 
+app.delete("/api/customers/:id", async (req, res) => {
+  try {
+    const customerId = req.params.id;
+    const result = await Customer.deleteOne({ _id: customerId });
+    res.json({ deletedCount: result.deletedCount });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 app.post("/api/customers", async (req, res) => {
   console.log(req.body);
   // this way we can save data from client side
