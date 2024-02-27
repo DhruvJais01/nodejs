@@ -22,8 +22,8 @@ const customers = [
 ];
 
 const customer = new Customer({
-  name: "John",
-  industry: "marketing",
+  name: "john",
+  industry: "sports",
 });
 
 // customer.save();
@@ -41,9 +41,17 @@ app.get("/api/customers", async (req, res) => {
   }
 });
 
-app.post("/api/customers", (req, res) => {
+app.post("/api/customers", async (req, res) => {
   console.log(req.body);
-  res.send(req.body);
+  // this way we can save data from client side
+  const customer = new Customer(req.body);
+
+  try {
+    await customer.save();
+    res.status(200).json({ customer });
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
 });
 
 app.post("/", (req, res) => {

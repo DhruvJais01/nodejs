@@ -278,7 +278,7 @@ const customerSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Customer", customerSchema);
-// in mongodb the collection name is always in lowercase and pluralized
+// in mongodb the table name is always in lowercase and pluralized
 // it doesnt matter if you write customer
 ```
 
@@ -317,5 +317,70 @@ app.get("/api/customers", async (req, res) => {
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
+});
+```
+
+# Writing data to collection
+
+### Changing collection name
+
+write the name between '/' and '?' in CONNECTION
+
+```env
+CONNECTION=mongodb+srv://dhruvjaiswal400:dHRUv_n9@cluster0.xxq9arr.mongodb.net/customers?retryWrites=true&w=majority&appName=Cluster0
+```
+
+```javascript
+app.post("/api/customers", async (req, res) => {
+  console.log(req.body);
+  // here we are sending data from code
+  const customer = new Customer({ name: "kamal", industry: "sports" });
+
+  try {
+    await customer.save();
+    res.status(200).json({ customer });
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+});
+```
+
+**another way to provide value to each of fields for customer**
+
+```javascript
+// this way we can save data from client side
+app.post("/api/customers", async (req, res) => {
+  console.log(req.body);
+  // here we are sending data from code
+  const customer = new Customer({
+    name: req.body.name,
+    industry: req.body.industry,
+  });
+
+  try {
+    await customer.save();
+    res.status(200).json({ customer });
+  } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+});
+```
+
+_We can short this code providing only request body, because object
+is matching the structure of the schema_
+
+```javascript
+const customer = new Customer(req.body);
+```
+
+**setting field to required**
+
+```javascript
+const customerSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  industry: String,
 });
 ```
