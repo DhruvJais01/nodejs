@@ -482,3 +482,18 @@ app.get("/api/customers/:id", async (req, res) => {
   }
 });
 ```
+
+# Updadting data with PUT requests
+
+```javascript
+app.put("/api/customers/:id", async (req, res) => {
+  try {
+    const customerId = req.params.id;
+    const result = await Customer.replaceOne({ _id: customerId }, req.body);
+    console.log(result);
+    res.json({ updatedCount: result.modifiedCount });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+```
