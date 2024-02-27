@@ -302,3 +302,20 @@ app.get("/", (req, res) => {
   res.send(customer);
 });
 ```
+
+# Reading data from collection
+
+finds all customers from Customer collection and store in result and pass it for request
+
+here res.read or res.json are same thing
+
+```javascript
+app.get("/api/customers", async (req, res) => {
+  try {
+    const result = await Customer.find();
+    res.json({ customers: result });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+```
