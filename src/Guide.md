@@ -265,3 +265,40 @@ adding environment variables in .env file
 CONNECTION=mongodb+srv://dhruvjaiswal400:dHRUv_n9@cluster0.xxq9arr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 
 ```
+
+# Models and working with schema in Mongodb database
+
+1. created customer(model) in src/models folder
+
+```javascript
+const mongoose = require("mongoose");
+const customerSchema = new mongoose.Schema({
+  name: String,
+  industry: String,
+});
+
+module.exports = mongoose.model("Customer", customerSchema);
+// in mongodb the collection name is always in lowercase and pluralized
+// it doesnt matter if you write customer
+```
+
+2. implentation in application
+
+```javascript
+const Customer = require("./models/customer");
+```
+
+_sneak peek_
+
+```javascript
+const customer = new Customer({
+  name: "caleb",
+  industry: "marketing",
+});
+
+customer.save(); // it saves the customer data in cloud database
+
+app.get("/", (req, res) => {
+  res.send(customer);
+});
+```

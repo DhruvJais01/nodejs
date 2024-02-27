@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const Customer = require("./models/customer");
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true })); // for POST requests
+
 mongoose.set("strictQuery", false);
 
 if (process.env.NODE_ENV !== "production") {
@@ -19,8 +21,15 @@ const customers = [
   { name: "Sal", industry: "sports medicine" },
 ];
 
+const customer = new Customer({
+  name: "caleb",
+  industry: "marketing",
+});
+
+customer.save(); // it saves the customer data in cloud database
+
 app.get("/", (req, res) => {
-  res.send("Welcome");
+  res.send(customer);
 });
 
 app.get("/api/customers", (req, res) => {
