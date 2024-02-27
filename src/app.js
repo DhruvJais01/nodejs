@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const Customer = require("./models/customer");
+const cors = require("cors");
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // for POST requests
 

@@ -511,3 +511,30 @@ app.delete("/api/customers/:id", async (req, res) => {
   }
 });
 ```
+
+# Adding frontend react js project
+
+### Installing cors
+
+it makes connection between different origin server and project
+
+```bash
+npm install cors
+```
+
+```javascript
+const cors = require("cors");
+
+app.use(cors());
+```
+
+**In shared.js file from react folder**
+
+```javascript
+export const baseUrl = "http://localhost:3005/";
+```
+
+- set the url of nodejs server
+
+- and set the id to \_id in customers.js (mongodb default) so we can change data selected from id
+- and set POST request to PUT request in customer.js
