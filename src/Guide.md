@@ -157,3 +157,37 @@ app.post("/api/customers", (req, res) => {
   res.send(req.body);
 });
 ```
+
+# MongoDB
+
+1. Created a cloud database
+2. installing packages
+
+   ```powershell
+   npm install mongoose
+   ```
+
+3. importing mongoose
+   ```javascript
+   const mongoose = require("mongoose");
+   mongoose.set("strictQuery", false);
+   ```
+4. implementing hardcoded
+
+   ```javascript
+   const start = async () => {
+     try {
+       await mongoose.connect(
+         "mongodb+srv://dhruvjaiswal400:dHRUv_n9@cluster0.xxq9arr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+       );
+
+       app.listen(PORT, () => {
+         console.log("App listening on port " + PORT);
+       });
+     } catch (e) {
+       console.log(e.message);
+     }
+   };
+
+   start();
+   ```

@@ -1,9 +1,10 @@
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+mongoose.set("strictQuery", false);
 const PORT = 3000;
 
 const customers = [
@@ -29,6 +30,18 @@ app.post("/", (req, res) => {
   res.send("This is a post request");
 });
 
-app.listen(PORT, () => {
-  console.log("App listening on port " + PORT);
-});
+const start = async () => {
+  try {
+    await mongoose.connect(
+      "mongodb+srv://dhruvjaiswal400:dHRUv_n9@cluster0.xxq9arr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    );
+
+    app.listen(PORT, () => {
+      console.log("App listening on port " + PORT);
+    });
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+start();
