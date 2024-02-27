@@ -191,3 +191,77 @@ app.post("/api/customers", (req, res) => {
 
    start();
    ```
+
+# Environment variables
+
+**Preview**
+
+```javascript
+const PORT = process.env.PORT || 3000;
+```
+
+```powershell
+PORT=3002 npm start
+# or
+PORT=3002 npm run start #(run explicitly from different starting point)
+# or
+PORT=3002 npx nodemon
+# or
+PORT=3002 npx nodemon src/app.js
+```
+
+**env**
+
+1. installing dotenv package
+
+```bash
+npm install dotenv
+```
+
+2 . creating .env file in root folder and creting variables
+
+```env
+PORT=3005
+```
+
+3. importing dotenv package
+
+```javascript
+const dotenv = require("dotenv");
+dotenv.config();
+```
+
+4. to run
+
+```powershell
+NODE_ENV=production npm run start
+```
+
+_**better way to do it**_
+
+```javascript
+// this way we dont have to import dotenv
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+```
+
+```powershell
+npm run start
+```
+
+**Same with Connection**
+
+```javascript
+const CONNECTION = process.env.CONNECTION;
+
+//inside start function
+await mongoose.connect(CONNECTION);
+```
+
+adding environment variables in .env file
+
+```env
+CONNECTION=mongodb+srv://dhruvjaiswal400:dHRUv_n9@cluster0.xxq9arr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+```

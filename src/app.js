@@ -5,7 +5,13 @@ const mongoose = require("mongoose");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 mongoose.set("strictQuery", false);
-const PORT = 3000;
+
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
+const PORT = process.env.PORT || 3000;
+const CONNECTION = process.env.CONNECTION;
 
 const customers = [
   { name: "Caleb", industry: "music" },
@@ -32,9 +38,7 @@ app.post("/", (req, res) => {
 
 const start = async () => {
   try {
-    await mongoose.connect(
-      "mongodb+srv://dhruvjaiswal400:dHRUv_n9@cluster0.xxq9arr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-    );
+    await mongoose.connect(CONNECTION);
 
     app.listen(PORT, () => {
       console.log("App listening on port " + PORT);
