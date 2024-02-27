@@ -384,3 +384,101 @@ const customerSchema = new mongoose.Schema({
   industry: String,
 });
 ```
+
+# Parameterized URLs and Query String Parameters
+
+### parameterized url
+
+_sneak peek_
+
+```javascript
+app.get("/api/customers/:id", async (req, res) => {
+  res.json({ requestParams: req.params });
+});
+```
+
+```url parameters
+http://localhost:3005/api/customers/65dda5714670659d0f6ec28d
+```
+
+```json
+{
+  "requestParams": {
+    "id": "65dda5714670659d0f6ec28d"
+  }
+}
+```
+
+the :id is parameterized url, so when u give extra path like "/api/customers/..." then it will return the id of the customer which is the request parameter
+
+if u want more than one request parameter u need to follow the convention like "/:pathname" otherwise it will open different page.
+
+```javascript
+app.get("/api/customers/:id/:test", async (req, res) => {
+  res.json({ requestParams: req.params });
+});
+```
+
+```url parameters
+http://localhost:3005/api/customers/65dda5714670659d0f6ec28d/hello
+```
+
+```json
+{
+  "requestParams": {
+    "id": "65dda5714670659d0f6ec28d",
+    "test": "hello"
+  }
+}
+```
+
+### Query parameters
+
+Request parameters starts with '?' and if u want to add more use '&'
+
+_sneak peek_
+
+```javascript
+app.get("/api/customers/:id/:test", async (req, res) => {
+  res.json({ requestParams: req.params, requestQuery: req.query });
+});
+```
+
+```url parameters
+http://localhost:3005/api/customers/65dda5714670659d0f6ec28d/hello?age=23&state=ohio
+```
+
+```json
+{
+  "requestParams": {
+    "id": "65dda5714670659d0f6ec28d",
+    "test": "hello"
+  },
+  "requestQuery": {
+    "age": "40",
+    "state": "ohio"
+  }
+}
+```
+
+**getting customer from id**
+
+```javascript
+app.get("/api/customers/:id", async (req, res) => {
+  console.log({ requestParams: req.params, requestQuery: req.query });
+  // const customerId = req.params.id;
+  try {
+    const { id: customerId } = req.params; // destructuring
+    console.log(customerId);
+    const customer = await Customer.findById(customerId);
+    console.log(customer);
+    if (!customer) {
+      res.status(404).json({ error: "user not found" });
+    } else {
+      res.json({ customer });
+    }
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+```

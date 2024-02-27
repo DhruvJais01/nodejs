@@ -41,6 +41,24 @@ app.get("/api/customers", async (req, res) => {
   }
 });
 
+app.get("/api/customers/:id", async (req, res) => {
+  console.log({ requestParams: req.params, requestQuery: req.query });
+  // const customerId = req.params.id;
+  try {
+    const { id: customerId } = req.params; // destructuring
+    console.log(customerId);
+    const customer = await Customer.findById(customerId);
+    console.log(customer);
+    if (!customer) {
+      res.status(404).json({ error: "user not found" });
+    } else {
+      res.json({ customer });
+    }
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 app.post("/api/customers", async (req, res) => {
   console.log(req.body);
   // this way we can save data from client side
