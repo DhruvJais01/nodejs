@@ -6,6 +6,7 @@ const cors = require("cors");
 
 app.use(cors());
 app.use(express.json());
+
 app.use(express.urlencoded({ extended: true })); // for POST requests
 
 mongoose.set("strictQuery", false);
@@ -65,6 +66,22 @@ app.put("/api/customers/:id", async (req, res) => {
   try {
     const customerId = req.params.id;
     const customer = await Customer.findOneAndReplace(
+      { _id: customerId },
+      req.body,
+      { new: true } // if we not pass this property, server return old data after updating in database
+    );
+    console.log(customer);
+    res.json({ customer });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.patch("/api/customers/:id", async (req, res) => {
+  try {
+    const customerId = req.params.id;
+    const customer = await Customer.findOneAndUpdate(
       { _id: customerId },
       req.body,
       { new: true } // if we not pass this property, server return old data after updating in database

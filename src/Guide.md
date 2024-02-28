@@ -566,7 +566,7 @@ app.put("/api/customers/:id", async (req, res) => {
 });
 ```
 
-# Working with nexted data
+# Working with nested data
 
 adding new field in schema
 
@@ -578,5 +578,25 @@ const customerSchema = new mongoose.Schema({
   },
   industry: String,
   orders: [{ description: String, amountInCents: Number }],
+});
+```
+
+# patch request
+
+```javascript
+app.patch("/api/customers/:id", async (req, res) => {
+  try {
+    const customerId = req.params.id;
+    const customer = await Customer.findOneAndUpdate(
+      { _id: customerId },
+      req.body,
+      { new: true } // if we not pass this property, server return old data after updating in database
+    );
+    console.log(customer);
+    res.json({ customer });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ error: e.message });
+  }
 });
 ```
