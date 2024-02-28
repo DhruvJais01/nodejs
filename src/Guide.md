@@ -565,3 +565,18 @@ app.put("/api/customers/:id", async (req, res) => {
   }
 });
 ```
+
+# Working with nexted data
+
+adding new field in schema
+
+```javascript
+const customerSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  industry: String,
+  orders: [{ description: String, amountInCents: Number }],
+});
+```
