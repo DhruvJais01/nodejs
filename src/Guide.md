@@ -538,3 +538,30 @@ export const baseUrl = "http://localhost:3005/";
 
 - and set the id to \_id in customers.js (mongodb default) so we can change data selected from id
 - and set POST request to PUT request in customer.js
+- Now everythings is fine in react project but still put request not working fine because we are getting updated counts from server instead of customer object
+
+```json
+{
+  "updatedCount": 1
+}
+```
+
+_modifying put request_
+
+```javascript
+app.put("/api/customers/:id", async (req, res) => {
+  try {
+    const customerId = req.params.id;
+    const customer = await Customer.findOneAndReplace(
+      { _id: customerId },
+      req.body,
+      { new: true } // if we not pass this property, server return old data after updating in database
+    );
+    console.log(customer);
+    res.json({ customer });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ error: e.message });
+  }
+});
+```
