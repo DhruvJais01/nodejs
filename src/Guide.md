@@ -775,3 +775,15 @@ const c: HydratedDocument<ICustomer> = new Customer({
 
 console.log(c.name);
 ```
+
+# More:
+
+- Authorization (dev greg yt)
+- JSON web token
+- Cookies
+- deployment (aws)
+- Next js
+- Databases
+- pagging api
+- security
+- GraphiUL
