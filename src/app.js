@@ -94,6 +94,42 @@ app.patch("/api/customers/:id", async (req, res) => {
   }
 });
 
+app.get("/api/orders/:id", async (req, res) => {
+  try {
+    const result = await Customer.findOne({ "orders._id": req.params.id });
+    if (result) {
+      res.json({ result });
+    } else {
+      res.status(404).json({ error: "orders not found" });
+    }
+  } catch (e) {
+    console.log(e);
+    res.status(404).json({ error: e.message });
+  }
+});
+
+app.patch("/api/orders/:id", async (req, res) => {
+  console.log(req.params);
+  try {
+    const orderId = req.params.id;
+    req.body._id = orderId; // so id wont change
+    const result = await Customer.findOneAndUpdate(
+      { "orders._id": orderId },
+      { $set: { "orders.$": req.body } },
+      { new: true }
+    );
+    console.log(result);
+    if (result) {
+      res.json({ result });
+    } else {
+      res.status(404).json({ error: "something went wrong" });
+    }
+  } catch (e) {
+    console.log(e.message);
+    res.json({ error: e.message });
+  }
+});
+
 app.delete("/api/customers/:id", async (req, res) => {
   try {
     const customerId = req.params.id;
