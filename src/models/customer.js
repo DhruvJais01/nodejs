@@ -1,7 +1,8 @@
 "use strict";
-//@ts-nocheck
-const mongoose = require("mongoose");
-const customerSchema = new mongoose.Schema({
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Customer = void 0;
+const mongoose_1 = require("mongoose");
+const customerSchema = new mongoose_1.Schema({
     name: {
         type: String,
         required: true,
@@ -9,6 +10,6 @@ const customerSchema = new mongoose.Schema({
     industry: String,
     orders: [{ description: String, amountInCents: Number }],
 });
-module.exports = mongoose.model("Customer", customerSchema);
+exports.Customer = (0, mongoose_1.model)("customer", customerSchema);
 // in mongodb the table name is always in lowercase and pluralized
 // it doesnt matter if you write customer

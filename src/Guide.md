@@ -678,3 +678,59 @@ tsc -p tsconfig.json
 # it will automatically compile if any changes are made in typescript file
 tsc -p tsconfig.json --watch
 ```
+
+# import and export in typescript
+
+- adding watch in package.json
+
+```javascript
+"scripts": {
+    "start": "npx nodemon",
+    "watch": "tsc -p tsconfig.json --watch"
+  }
+```
+
+### Translating js to ts
+
+customer.ts
+
+```typescript
+import { Schema, model } from "mongoose";
+const customerSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  industry: String,
+  orders: [{ description: String, amountInCents: Number }],
+});
+
+export const Customer = model("customer", customerSchema);
+// in mongodb the table name is always in lowercase and pluralized
+// it doesnt matter if you write customer
+```
+
+**we can change some settings temporarily in tsconfig for ease**
+
+```json
+/* Type Checking */
+    "strict": true /* Enable all strict type-checking options. */,
+    "noImplicitAny": true /* Enable error reporting for expressions and declarations with an implied 'any' type. */,
+    "useUnknownInCatchVariables": false,               /* Default catch clause variables as 'unknown' instead of 'any'. */
+```
+
+and installing types for express
+
+```bash
+npm install @types/express
+```
+
+this basically means that these parameters of these types and if you try to acces some properties on this parameter without being defined in the types, you are going to get an typescript compilation error
+
+```javascript
+import { Request, Response } from "express";
+
+app.get("/", (req: Request, res: Response) => {
+  res.send("Welcome!!");
+});
+```

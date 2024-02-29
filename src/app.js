@@ -8,12 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-// @ts-nocheck
+Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
-const app = express();
 const mongoose = require("mongoose");
 const Customer = require("./models/customer");
 const cors = require("cors");
+const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // for POST requests
