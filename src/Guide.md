@@ -646,3 +646,35 @@ app.patch("/api/orders/:id", async (req, res) => {
   }
 });
 ```
+
+# TypeScript
+
+```bash
+npm install --dev typescript
+# or
+npm install -D typescript
+# or
+ npm install -g typescript #global installation
+```
+
+to integrate in project
+
+- change the javascript extension with typescript (.ts)
+
+```bash
+tsc --init
+tsc src/app.ts
+```
+
+it will generate a js file with typescript, but there will be lot of errors. We can omit that using ` //@ts-nocheck` at the top of the typescript file.
+
+### to compile
+
+```bash
+tsc -p tsconfig.json
+```
+
+```bash
+# it will automatically compile if any changes are made in typescript file
+tsc -p tsconfig.json --watch
+```
